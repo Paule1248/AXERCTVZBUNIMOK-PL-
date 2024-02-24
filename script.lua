@@ -6,8 +6,8 @@ _G.autohatch = true
 _G.SelectEgg = "Tech Ciruit Egg"
 _G.EggAmount = 1
 _G.autoconsumeFruits = true
-
-
+_G.UltimateSelected = "Ground Pound"
+_G.autoUltimateuse = true
 
 --Functions
 
@@ -17,7 +17,7 @@ function autohatch()
             wait(.0001)
         end
     end
---consume Fruits
+
 function autoconsumeFruits()
     while _G.autoconsumeFruits == true do      
         game:GetService("ReplicatedStorage").Network["Fruits: Consume"]:FireServer("bea094be6eac4024a969dbf1ec436330",1)
@@ -30,8 +30,19 @@ function autoconsumeFruits()
         wait(0.1)
         end
     end
-        
+function autoUltimate()
+    while _G.autoUltimateuse == true do
+            game:GetService("ReplicatedStorage").Network["Ultimates: Activate"]:InvokeServer(_G.UltimateSelected)
+            wait(.05)
+        end
+    end
+            
 --Tabs
+local MainTab = Window:MakeTab({
+	Name = "MainFarm",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
 local EggTab = Window:MakeTab({
 	Name = "Eggs",
 	Icon = "rbxassetid://4483345998",
@@ -54,6 +65,7 @@ local Section = ItemsTab:AddSection({
 })
 
 --slider
+
 EggTab:AddSlider({
 	Name = "Egg Amount",
 	Min = 1,
@@ -64,27 +76,24 @@ EggTab:AddSlider({
 	ValueName = "EggAmount",
 	Callback = function(Value)
 		_G.EggAmount = Value
-        print(_G.EggAmount)
 	end    
 })
 
 --dropdowns
-EggTab:AddDropdown({
-	Name = "Select egg",
-	Default = "Tech Ciruit Egg",
-	Options = {"Tech Ciruit Egg", "Tech City Egg"},
+MainTab:AddDropdown({
+	Name = "Select Ultimate",
+	Default = "Ground Pound",
+	Options = {"Ground Pound", "Black Hole", "Chest Spell", "Tornado", "Pet Surge", "TNT Shower"},
 	Callback = function(Value)
-		_G.SelectEgg = Value
-        print(_G.SelectEgg)
+		_G.UltimateSelected = Value
 	end    
 })
-ItemsTab:AddDropdown({
-	Name = "Select egg",
+EggTab:AddDropdown({
+	Name = "Select Egg",
 	Default = "Tech Ciruit Egg",
 	Options = {"Tech Ciruit Egg", "Tech City Egg"},
 	Callback = function(Value)
 		_G.SelectEgg = Value
-        print(_G.SelectEgg)
 	end    
 })
 
@@ -95,6 +104,14 @@ EggTab:AddToggle({
 	Callback = function(Value)
         _G.autohatch = Value
 		autohatch()
+	end
+})
+MainTab:AddToggle({
+	Name = "Auto Use Ultimate",
+	Default = false,
+	Callback = function(Value)
+        _G.autoUltimateuse = Value
+		autoUltimate()
 	end
 })
 --AutoConsume
