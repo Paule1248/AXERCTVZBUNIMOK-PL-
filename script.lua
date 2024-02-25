@@ -8,6 +8,7 @@ _G.EggAmount = 1
 _G.autoconsumeFruits = true
 _G.UltimateSelected = "Ground Pound"
 _G.autoUltimateuse = true
+_G.autoMagnetFlag = true
 
 --Functions
 
@@ -36,7 +37,12 @@ function autoUltimate()
             wait(.05)
         end
     end
-            
+function magnetflag()
+	while _G.autoMagnetFlag == true do
+		
+		wait(0.001)
+	end
+end
 --Tabs
 local MainTab = Window:MakeTab({
 	Name = "MainFarm",
@@ -55,6 +61,11 @@ local ItemsTab = Window:MakeTab({
 })
 local MiscTab = Window:MakeTab({
 	Name = "Misc",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
+local WebhookTab = Window:MakeTab({
+	Name = "Webhook",
 	Icon = "rbxassetid://4483345998",
 	PremiumOnly = false
 })
@@ -114,6 +125,14 @@ MainTab:AddToggle({
 		autoUltimate()
 	end
 })
+MainTab:AddToggle({
+	Name = "Auto Magnet Flag",
+	Default = false,
+	Callback = function(Value)
+        _G.autoMagnetFlag = Value
+		magnetflag()
+	end
+})
 --AutoConsume
 ItemsTab:AddToggle({
 	Name = "Eat all Fruits",
@@ -138,3 +157,12 @@ MiscTab:AddButton({
   	end    
 })
 
+--Adaptive Input 
+EggTab:AddTextbox({
+	Name = "Amount Eggs (Mobile)",
+	Default = "",
+	TextDisappear = true,
+	Callback = function(Value)
+		_G.EggAmount = Value
+	end	  
+})
