@@ -198,14 +198,6 @@ MiscTab:AddButton({
 })
 
 --Adaptive Input
-EggTab:AddTextbox({
-	Name = "Amount Eggs (Mobile)",
-	Default = "",
-	TextDisappear = false,
-	Callback = function(Value)
-		_G.EggAmountMobile = Value
-	end	  
-})
 WebhookTab:AddTextbox({
 	Name = "Input Webhook",
 	Default = "",
