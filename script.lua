@@ -3,10 +3,8 @@ local Window = OrionLib:MakeWindow({Name = "PS99", HidePremium = false, IntroEna
 
 --Values
 _G.autohatch = true
-_G.autohatchMobile = true
 _G.SelectEgg = "Tech Ciruit Egg"
 _G.EggAmount = 1
-_G.EggAmountMobile = 1
 _G.UltimateSelected = "Ground Pound"
 _G.autoUltimateuse = true
 _G.WebhookUse = ""
@@ -22,14 +20,6 @@ function autohatch()
             wait(.0001)
         end
     end
-function autohatchMobile()
-		while _G.autohatch == true do
-				game:GetService("ReplicatedStorage").Network.Eggs_RequestPurchase:InvokeServer(_G.SelectEgg,_G.EggAmountMobile)
-				game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-10043.3134765625, 16.506406784057617, -314.23333740234375)
-				wait(.0001)
-			end
-		end
-	
 function autoUltimate()
     while _G.autoUltimateuse == true do
             game:GetService("ReplicatedStorage").Network["Ultimates: Activate"]:InvokeServer(_G.UltimateSelected)
@@ -170,19 +160,11 @@ EggTab:AddDropdown({
 
 --Toogles
 EggTab:AddToggle({
-	Name = "AutoHatch",
+	Name = "AutoHatch (PC)",
 	Default = false,
 	Callback = function(Value)
         _G.autohatch = Value
 		autohatch()
-	end
-})
-EggTab:AddToggle({
-	Name = "AutoHatch (Mobile)",
-	Default = false,
-	Callback = function(Value)
-        _G.autohatchMobile = Value
-		autohatchMobile()
 	end
 })
 WebhookTab:AddToggle({
