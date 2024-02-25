@@ -1,8 +1,3 @@
-local bb=game:service'VirtualUser'
-game:service'Players'.LocalPlayer.Idled:connect(function()
-bb:CaptureController()bb:ClickButton2(Vector2.new())
-ab.Text="You went idle and ROBLOX tried to kick you but we reflected it!"wait(2)ab.Text="Script Re-Enabled"end)
-
 local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/UI-Interface/CustomFIeld/main/RayField.lua'))()
 local Window = Rayfield:CreateWindow({
     Name = "PS99",
@@ -39,6 +34,8 @@ _G.autoUltimateuse = true
 _G.WebhookUse = ""
 _G.Webhookstats = true
 _G.webhookwait = 30
+_G.antiafk = true
+_G.AcceptMailbox = true
 local WebhookUse = _G.WebhookUse
 
 --Functions
@@ -49,12 +46,25 @@ function autohatch()
             wait(.0001)
         end
     end
+function antiafk()
+    while _G.antiafk == true do
+            game:GetService("ReplicatedStorage").Network.Click:FireServer(Ray.new({-10021.9736, 92.3745041, -376.680084}, {-0.813847959, -0.320810258, 0.484491765}),)
+            game:GetService("ReplicatedStorage").Network["Idle Tracking: Stop Timer"]:FireServer() 
+            wait(60)
+        end
+    end
 function autoUltimate()
     while _G.autoUltimateuse == true do
             game:GetService("ReplicatedStorage").Network["Ultimates: Activate"]:InvokeServer(_G.UltimateSelected)
             wait(.05)
         end
     end
+function AcceptMailbox()
+    while _G.AcceptMailbox == true do
+            game:GetService("ReplicatedStorage").Network["Mailbox: Claim All"]:InvokeServer({})  
+            wait(1)
+        end
+    end  
 function sendWebhook_stats()
 	while _G.Webhookstats == true do
 		function SendMessage(url, message)
@@ -133,7 +143,7 @@ end
 
 --tabs
 local Tab = Window:CreateTab("Main", 4483362458) -- Title, Image
-local MiscTab = Window:CreateTab("Misc", 4483362458) -- Title, Image
+local Mailbox = Window:CreateTab("Misc", 4483362458) -- Title, Image
 
 --toggles
 local Toggle = Tab:CreateToggle({
@@ -164,6 +174,39 @@ local Toggle = Tab:CreateToggle({
     Callback = function(Value)
         _G.autoUltimateuse = Value
 		autoUltimate()
+    end,
+ })
+ local Toggle = Tab:CreateToggle({
+    Name = "Antiafk",
+    Info = "Toggle info/Description.", -- Speaks for itself, Remove if none.
+    CurrentValue = false,
+    Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Value)
+        _G.Antiafk = value
+        antiafk()
+    end,
+ })
+ local Toggle = Mailbox:CreateToggle({
+    Name = "AcceptMail",
+    Info = "Toggle info/Description.", -- Speaks for itself, Remove if none.
+    CurrentValue = false,
+    Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Value)
+        _G.AcceptMailbox = value
+        AcceptMailbox()
+    end,
+ })
+
+ --buttons
+ local Button = Tab:CreateButton({
+    Name = "AntiRoblox kick",
+    Info = "Button info/Description.", -- Speaks for itself, Remove if none.
+    Interact = 'Changable',
+    Callback = function()
+        local bb=game:service'VirtualUser'
+        game:service'Players'.LocalPlayer.Idled:connect(function()
+        bb:CaptureController()bb:ClickButton2(Vector2.new())
+        ab.Text="You went idle and ROBLOX tried to kick you but we reflected it!"wait(2)ab.Text="Script Re-Enabled"end)
     end,
  })
 
