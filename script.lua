@@ -48,7 +48,7 @@ function autohatch()
     end
 function antiafk()
     while _G.antiafk == true do
-            --game:GetService("ReplicatedStorage").Network.Click:FireServer(Ray.new({-10021.9736, 92.3745041, -376.680084}, {-0.813847959, -0.320810258, 0.484491765}),),
+            game:GetService("ReplicatedStorage").Network.Click:FireServer(Ray.new({-10021.9736, 92.3745041, -376.680084}, {-0.813847959, -0.320810258, 0.484491765}),),
             game:GetService("ReplicatedStorage").Network["Idle Tracking: Stop Timer"]:FireServer()
             wait(60)
         end
