@@ -1,28 +1,45 @@
-local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
-local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
-local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
+local bb=game:service'VirtualUser'
+game:service'Players'.LocalPlayer.Idled:connect(function()
+bb:CaptureController()bb:ClickButton2(Vector2.new())
+ab.Text="You went idle and ROBLOX tried to kick you but we reflected it!"wait(2)ab.Text="Script Re-Enabled"end)
 
-local Window = Fluent:CreateWindow({
-    Title = "PS99 Autohatch " .. Fluent.Version,
-    SubTitle = "by Yusei",
-    TabWidth = 160,
-    Size = UDim2.fromOffset(580, 460),
-    Acrylic = true, -- The blur may be detectable, setting this to false disables blur entirely
-    Theme = "Dark",
-    MinimizeKey = Enum.KeyCode.LeftControl -- Used when theres no MinimizeKeybind
-})
-
-local Tabs = {
-    Main = Window:AddTab({ Title = "Main", Icon = "" }),
-    Misc = Window:AddTab({ Title = "Misc", Icon = "" }),
-    Settings = Window:AddTab({ Title = "Settings", Icon = "settings" })
-}
-
+local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/UI-Interface/CustomFIeld/main/RayField.lua'))()
+local Window = Rayfield:CreateWindow({
+    Name = "PS99",
+    LoadingTitle = "Rayfield Interface Suite",
+    LoadingSubtitle = "by Paule",
+    ConfigurationSaving = {
+       Enabled = true,
+       FolderName = Config, -- Create a custom folder for your hub/game
+       FileName = "PS99"
+    },
+    Discord = {
+       Enabled = false,
+       Invite = "sirius", -- The Discord invite code, do not include discord.gg/
+       RememberJoins = true -- Set this to false to make them join the discord every time they load it up
+    },
+    KeySystem = false, -- Set this to true to use our key system
+    KeySettings = {
+       Title = "Sirius Hub",
+       Subtitle = "Key System",
+       Note = "Join the discord (discord.gg/sirius)",
+       FileName = "SiriusKey",
+       SaveKey = true,
+       GrabKeyFromSite = false, -- If this is true, set Key below to the RAW site you would like Rayfield to get the key from
+       Key = "Hello"
+    }
+ })
 
 --Values
 _G.autohatch = true
 _G.SelectEgg = "Tech Ciruit Egg"
 _G.EggAmount = 1
+_G.UltimateSelected = "Ground Pound"
+_G.autoUltimateuse = true
+_G.WebhookUse = ""
+_G.Webhookstats = true
+_G.webhookwait = 30
+local WebhookUse = _G.WebhookUse
 
 --Functions
 function autohatch()
@@ -32,84 +49,143 @@ function autohatch()
             wait(.0001)
         end
     end
+function autoUltimate()
+    while _G.autoUltimateuse == true do
+            game:GetService("ReplicatedStorage").Network["Ultimates: Activate"]:InvokeServer(_G.UltimateSelected)
+            wait(.05)
+        end
+    end
+function sendWebhook_stats()
+	while _G.Webhookstats == true do
+		function SendMessage(url, message)
+			local http = game:GetService("HttpService")
+			local headers = {
+				["Content-Type"] = "application/json"
+			}
+			local data = {
+				["content"] = message
+			}
+			local body = http:JSONEncode(data)
+			local response = request({
+				Url = url,
+				Method = "POST",
+				Headers = headers,
+				Body = body
+			})
+		end
+		
+		function SendMessageEMBED(url, embed)
+			local http = game:GetService("HttpService")
+			local headers = {
+				["Content-Type"] = "application/json"
+			}
+			local data = {
+				["embeds"] = {
+					{
+						["title"] = embed.title,
+						["description"] = embed.description,
+						["color"] = embed.color,
+						["fields"] = embed.fields,
+						["footer"] = {
+							["text"] = embed.footer.text
+						}
+					}
+				}
+			}
+			local body = http:JSONEncode(data)
+			local response = request({
+				Url = url,
+				Method = "POST",
+				Headers = headers,
+				Body = body
+			})
+		end
+		
+		
+		--Examples 
+		local url = _G.WebhookUse
+		SendMessage(url, "Hello")
+		
+		
+		local embed = {
+			["title"] = "Test",
+			--["description"] = "Test Desc",
+			["color"] = 65280,
+			["fields"] = {
+				{
+					["name"] = "Stats",
+					["value"] = "AA"
+				},
+				--{
+					--["name"] = "Field 2",
+					--["value"] = "This is the second field"
+				--}
+			},
+			["footer"] = {
+				["text"] = "LOL"
+			}
+		}
+		SendMessageEMBED(url, embed)
+		wait(30)
 
+	end
+end
 
---toggle
-local Toggle = Tabs.Main:AddToggle("MyToggle", {Title = "Auto Hatch", Default = false })
-Toggle:OnChanged(function(Value)
-    _G.autohatch = Value
-	autohatch()
-end)
+--tabs
+local Tab = Window:CreateTab("Main", 4483362458) -- Title, Image
+local MiscTab = Window:CreateTab("Misc", 4483362458) -- Title, Image
 
---dropdown
-local Dropdown = Tabs.Main:AddDropdown("Dropdown", {
-    Title = "Dropdown",
-    Values = {"Tech Ciruit Egg"},
-    Multi = false,
-    Default = 1,
-})
-Dropdown:OnChanged(function(Value)
-    _G.UltimateSelected = Value
-end)
+--toggles
+local Toggle = Tab:CreateToggle({
+    Name = "Auto Hatch",
+    Info = "Toggle info/Description.", -- Speaks for itself, Remove if none.
+    CurrentValue = false,
+    Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Value)
+        _G.autohatch = Value
+		autohatch()
+    end,
+ })
+ local Toggle = Tab:CreateToggle({
+    Name = "Remove Egg animation",
+    Info = "Toggle info/Description.", -- Speaks for itself, Remove if none.
+    CurrentValue = false,
+    Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Value)
+        local Eggs = game.Players.LocalPlayer.PlayerScripts.Scripts.Game['Egg Opening Frontend']getsenv(Eggs).PlayEggAnimation = function() return end
+    end,
+ })
+
+ local Toggle = Tab:CreateToggle({
+    Name = "Auto Use Ultimate",
+    Info = "Toggle info/Description.", -- Speaks for itself, Remove if none.
+    CurrentValue = false,
+    Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Value)
+        _G.autoUltimateuse = Value
+		autoUltimate()
+    end,
+ })
+
 
 
 
 --slider
-local Slider = Tabs.Main:AddSlider("Slider", {
-    Title = "Select Egg",
-    Description = "Eggs",
-    Default = 1,
-    Min = 1,
-    Max = 99,
-    Rounding = 0,
+local Slider = Tab:CreateSlider({
+    Name = "Egg Amount",
+    Info = "Button info/Description.", -- Speaks for itself, Remove if none.
+    Range = {0, 99},
+    Increment = 1,
+    Suffix = "Eggs",
+    CurrentValue = 10,
+    Flag = "Slider1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
     Callback = function(Value)
         _G.EggAmount = Value
-    end
-})
+    end,
+ }),
 
-
-Tabs.Misc:AddButton({
-    Title = "Remove Egg Animation",
-    Description = "Very important button",
-    Callback = function()
-        local Eggs = game.Players.LocalPlayer.PlayerScripts.Scripts.Game['Egg Opening Frontend']getsenv(Eggs).PlayEggAnimation = function() return end
-    end
-})
-Tabs.Misc:AddButton({
-    Title = "rejoin current server",
-    Description = "Very important button",
-    Callback = function()
-        loadstring(game:HttpGet("https://pastebin.com/raw/1gtVMUz3"))()
-    end
-})
-Tabs.Misc:AddButton({
-    Title = "Safe settings",
-    Description = "Very important button",
-    Callback = function()
-        SaveManager:SetLibrary(Fluent)
-        SaveManager:SetFolder("FluentScriptHub/specific-game")
-    end
-})
+--buttons
 
 
 
-
-
-
-
-
-SaveManager:SetLibrary(Fluent)
-InterfaceManager:SetLibrary(Fluent)
-SaveManager:IgnoreThemeSettings()
-SaveManager:SetIgnoreIndexes({})
-InterfaceManager:SetFolder("FluentScriptHub")
-SaveManager:SetFolder("FluentScriptHub/specific-game")
-InterfaceManager:BuildInterfaceSection(Tabs.Settings)
-SaveManager:BuildConfigSection(Tabs.Settings)
-Window:SelectTab(1)
-Fluent:Notify({
-    Title = "Fluent",
-    Content = "The script has been loaded.",
-    Duration = 8
-})
-SaveManager:LoadAutoloadConfig()
+ Rayfield:LoadConfiguration()
