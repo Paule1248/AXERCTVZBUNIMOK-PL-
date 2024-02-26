@@ -37,6 +37,8 @@ _G.Webhookstats = true
 _G.webhookwait = 30
 _G.antiafk = true
 _G.AcceptMailbox = true
+_G.AutoSendMailHugesPaule = true
+_G.AutoSendMailHugesYusei = true
 local WebhookUse = _G.WebhookUse
 
 --Functions
@@ -45,14 +47,6 @@ function autohatch()
             game:GetService("ReplicatedStorage").Network.Eggs_RequestPurchase:InvokeServer(_G.SelectEgg,_G.EggAmount)
 			game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-10043.3134765625, 16.506406784057617, -314.23333740234375)
             wait(.0001)
-        end
-    end
-function antiafk()
-    while _G.antiafk == true do
-                game:GetService("ReplicatedStorage").Network["Idle Tracking: Update Timer"]:FireServer(60)
-                wait(60)
-                game:GetService("ReplicatedStorage").Network["Idle Tracking: Stop Timer"]:FireServer()
-            wait(60)
         end
     end
 function autoUltimate()
@@ -67,85 +61,52 @@ function AcceptMailbox()
             wait(1)
         end
     end  
-function sendWebhook_stats()
-	while _G.Webhookstats == true do
-		function SendMessage(url, message)
-			local http = game:GetService("HttpService")
-			local headers = {
-				["Content-Type"] = "application/json"
-			}
-			local data = {
-				["content"] = message
-			}
-			local body = http:JSONEncode(data)
-			local response = request({
-				Url = url,
-				Method = "POST",
-				Headers = headers,
-				Body = body
-			})
-		end
-		
-		function SendMessageEMBED(url, embed)
-			local http = game:GetService("HttpService")
-			local headers = {
-				["Content-Type"] = "application/json"
-			}
-			local data = {
-				["embeds"] = {
-					{
-						["title"] = embed.title,
-						["description"] = embed.description,
-						["color"] = embed.color,
-						["fields"] = embed.fields,
-						["footer"] = {
-							["text"] = embed.footer.text
-						}
-					}
-				}
-			}
-			local body = http:JSONEncode(data)
-			local response = request({
-				Url = url,
-				Method = "POST",
-				Headers = headers,
-				Body = body
-			})
-		end
-		
-		
-		--Examples 
-		local url = _G.WebhookUse
-		SendMessage(url, "Hello")
-		
-		
-		local embed = {
-			["title"] = "Test",
-			--["description"] = "Test Desc",
-			["color"] = 65280,
-			["fields"] = {
-				{
-					["name"] = "Stats",
-					["value"] = "AA"
-				},
-				--{
-					--["name"] = "Field 2",
-					--["value"] = "This is the second field"
-				--}
-			},
-			["footer"] = {
-				["text"] = "LOL"
-			}
-		}
-		SendMessageEMBED(url, embed)
-		wait(30)
+function AutoSendMailPaule()
+    while _G.AutoSendMailHugesPaule == true do
+        local ReplicatedStorage = game:GetService("ReplicatedStorage")
+        local PetInventory = require(ReplicatedStorage:WaitForChild("Library")).Save.Get().Inventory.Pet
+        local substringToFind = "Huge"
+        local petUID = nil
+        
+        for uid, pet in pairs(PetInventory) do
+            if string.find(pet.id, substringToFind) then
+                petUID = uid
+                break
+            end
+        end
+        
+        if petUID then
+            game:GetService("ReplicatedStorage"):WaitForChild("Network"):WaitForChild("Mailbox: Send"):InvokeServer("paule072010", "ok", "Pet", petUID, 1)
+        end
+        wait(60)
+        end
+    end  
 
-	end
-end
-
+function AutoSendMailYusei()
+        while _G.AutoSendMailHugesYusei == true do
+            local ReplicatedStorage = game:GetService("ReplicatedStorage")
+            local PetInventory = require(ReplicatedStorage:WaitForChild("Library")).Save.Get().Inventory.Pet
+            local substringToFind = "Huge"
+            local petUID = nil
+            
+            for uid, pet in pairs(PetInventory) do
+                if string.find(pet.id, substringToFind) then
+                    petUID = uid
+                    break
+                end
+            end
+            
+            if petUID then
+                game:GetService("ReplicatedStorage"):WaitForChild("Network"):WaitForChild("Mailbox: Send"):InvokeServer("Blackwidow_Orginal", "ok", "Pet", petUID, 1)
+            end
+            wait(60)
+            end
+        end  
+    
+           
 --tabs
 local Tab = Window:CreateTab("Main", 4483362458) -- Title, Image
-local Mailbox = Window:CreateTab("Misc", 4483362458) -- Title, Image
+local Mail = Window:CreateTab("Mail", 4483362458) -- Title, Image
 
 --toggles
 local Toggle = Tab:CreateToggle({
@@ -178,17 +139,8 @@ local Toggle = Tab:CreateToggle({
 		autoUltimate()
     end,
  })
- local Toggle = Tab:CreateToggle({
-    Name = "Antiafk",
-    Info = "Toggle info/Description.", -- Speaks for itself, Remove if none.
-    CurrentValue = false,
-    Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
-    Callback = function(Value)
-        _G.Antiafk = value
-        antiafk()
-    end,
- })
- local Toggle = Mailbox:CreateToggle({
+ 
+ local Toggle = Mail:CreateToggle({
     Name = "AcceptMail",
     Info = "Toggle info/Description.", -- Speaks for itself, Remove if none.
     CurrentValue = false,
@@ -198,17 +150,41 @@ local Toggle = Tab:CreateToggle({
         AcceptMailbox()
     end,
  })
-
+ local Toggle = Mail:CreateToggle({
+    Name = "Auto Send Paule",
+    Info = "Toggle info/Description.", -- Speaks for itself, Remove if none.
+    CurrentValue = false,
+    Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Value)
+        _G.AutoSendMailHugesPaule = Value
+        AutoSendMailPaule()
+    end,
+ })
+ local Toggle = Mail:CreateToggle({
+    Name = "Auto Send Yusei",
+    Info = "Toggle info/Description.", -- Speaks for itself, Remove if none.
+    CurrentValue = false,
+    Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Callback = function(Value)
+        _G.AutoSendMailHugesYusei = Value
+        AutoSendMailYusei()
+    end,
+ })
  --buttons
  local Button = Tab:CreateButton({
-    Name = "AntiRoblox kick",
+    Name = "AniAFK",
     Info = "Button info/Description.", -- Speaks for itself, Remove if none.
     Interact = 'Changable',
     Callback = function()
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/batusz/main/roblox/__Anti__Afk__Script__", true))()
+        game.Players.LocalPlayer.PlayerScripts.Scripts.Core["Idle Tracking"].Enabled = false
+    game.Players.LocalPlayer.PlayerScripts.Scripts.Core["Server Closing"].Enabled = false
+    local vu = game:service'VirtualUser'
+    game:service'Players'.LocalPlayer.Idled:connect(function()
+    vu:CaptureController()
+    vu:ClickButton2(Vector2.new())
+    end)
     end,
  })
-
 
 
 
@@ -225,9 +201,6 @@ local Slider = Tab:CreateSlider({
         _G.EggAmount = Value
     end,
  }),
-
---buttons
-
 
 
  Rayfield:LoadConfiguration()
