@@ -123,7 +123,7 @@ local Toggle = Tab:CreateToggle({
     Name = "Remove Egg animation",
     Info = "Toggle info/Description.", -- Speaks for itself, Remove if none.
     CurrentValue = false,
-    Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Flag = "Toggle2", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
     Callback = function(Value)
         local Eggs = game.Players.LocalPlayer.PlayerScripts.Scripts.Game['Egg Opening Frontend']getsenv(Eggs).PlayEggAnimation = function() return end
     end,
@@ -133,7 +133,7 @@ local Toggle = Tab:CreateToggle({
     Name = "Auto Use Ultimate",
     Info = "Toggle info/Description.", -- Speaks for itself, Remove if none.
     CurrentValue = false,
-    Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Flag = "Toggle3", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
     Callback = function(Value)
         _G.autoUltimateuse = Value
 		autoUltimate()
@@ -144,7 +144,7 @@ local Toggle = Tab:CreateToggle({
     Name = "AcceptMail",
     Info = "Toggle info/Description.", -- Speaks for itself, Remove if none.
     CurrentValue = false,
-    Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Flag = "Toggle4", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
     Callback = function(Value)
         _G.AcceptMailbox = value
         AcceptMailbox()
@@ -154,7 +154,7 @@ local Toggle = Tab:CreateToggle({
     Name = "Auto Send Paule",
     Info = "Toggle info/Description.", -- Speaks for itself, Remove if none.
     CurrentValue = false,
-    Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Flag = "Toggle5", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
     Callback = function(Value)
         _G.AutoSendMailHugesPaule = Value
         AutoSendMailPaule()
@@ -164,7 +164,7 @@ local Toggle = Tab:CreateToggle({
     Name = "Auto Send Yusei",
     Info = "Toggle info/Description.", -- Speaks for itself, Remove if none.
     CurrentValue = false,
-    Flag = "Toggle1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Flag = "Toggle6", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
     Callback = function(Value)
         _G.AutoSendMailHugesYusei = Value
         AutoSendMailYusei()
@@ -196,7 +196,7 @@ local Slider = Tab:CreateSlider({
     Increment = 1,
     Suffix = "Eggs",
     CurrentValue = 10,
-    Flag = "Slider1", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+    Flag = "Slider1", -- A flag is the identifier for the configuration file, make  elesure everyment has a different flag if you're using configuration saving to ensure no overlaps
     Callback = function(Value)
         _G.EggAmount = Value
     end,
