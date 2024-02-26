@@ -41,14 +41,16 @@ local WebhookUse = _G.WebhookUse
 --Functions
 function autohatch()
     while _G.autohatch == true do
-            	game:GetService("ReplicatedStorage").Network.Eggs_RequestPurchase:InvokeServer(_G.SelectEgg,_G.EggAmount)
-		game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-10043.3134765625, 16.506406784057617, -314.23333740234375)
+            game:GetService("ReplicatedStorage").Network.Eggs_RequestPurchase:InvokeServer(_G.SelectEgg,_G.EggAmount)
+			game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-10043.3134765625, 16.506406784057617, -314.23333740234375)
             wait(.0001)
         end
     end
 function antiafk()
     while _G.antiafk == true do
-            game:GetService("ReplicatedStorage").Network["Idle Tracking: Stop Timer"]:FireServer()
+                game:GetService("ReplicatedStorage").Network["Idle Tracking: Update Timer"]:FireServer(60)
+                wait(60)
+                game:GetService("ReplicatedStorage").Network["Idle Tracking: Stop Timer"]:FireServer()
             wait(60)
         end
     end
@@ -202,10 +204,7 @@ local Toggle = Tab:CreateToggle({
     Info = "Button info/Description.", -- Speaks for itself, Remove if none.
     Interact = 'Changable',
     Callback = function()
-        local bb=game:service'VirtualUser'
-        game:service'Players'.LocalPlayer.Idled:connect(function()
-        bb:CaptureController()bb:ClickButton2(Vector2.new())
-        ab.Text="You went idle and ROBLOX tried to kick you but we reflected it!"wait(2)ab.Text="Script Re-Enabled"end)
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/batusz/main/roblox/__Anti__Afk__Script__", true))()
     end,
  })
 
