@@ -1,3 +1,4 @@
+getgenv().SecureMode = true
 local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/UI-Interface/CustomFIeld/main/RayField.lua'))()
 local Window = Rayfield:CreateWindow({
     Name = "PS99",
@@ -5,7 +6,7 @@ local Window = Rayfield:CreateWindow({
     LoadingSubtitle = "by Paule",
     ConfigurationSaving = {
        Enabled = true,
-       FolderName = Config, -- Create a custom folder for your hub/game
+       FolderName = PS99Script, -- Create a custom folder for your hub/game
        FileName = "PS99"
     },
     Discord = {
