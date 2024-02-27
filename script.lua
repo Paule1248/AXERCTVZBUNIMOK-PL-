@@ -46,8 +46,8 @@ local WebhookUse = _G.WebhookUse
 function autohatch()
     while _G.autohatch == true do
             game:GetService("ReplicatedStorage").Network.Eggs_RequestPurchase:InvokeServer(_G.SelectEgg,_G.EggAmount)
-			game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-10040, 17, -314)
-            wait(.0001)
+			game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-10040, -20, -314)
+            wait(.001)
         end
     end
 function autoUltimate()
