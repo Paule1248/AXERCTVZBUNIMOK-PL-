@@ -26,6 +26,7 @@ local Window = Rayfield:CreateWindow({
     }
  })
 
+
 --Values
 _G.autohatch = true
 _G.SelectEgg = "Tech Ciruit Egg"
@@ -76,9 +77,11 @@ function AutoSendMailPaule()
         end
         
         if petUID then
+            game:GetService("ReplicatedStorage").Network.Locking_SetLocked:InvokeServer(petUID,false)
+            wait(0.1)
             game:GetService("ReplicatedStorage"):WaitForChild("Network"):WaitForChild("Mailbox: Send"):InvokeServer("paule072010", "ok", "Pet", petUID, 1)
         end
-        wait(60)
+        wait(5)
         end
     end  
 
@@ -97,9 +100,11 @@ function AutoSendMailYusei()
             end
             
             if petUID then
+                game:GetService("ReplicatedStorage").Network.Locking_SetLocked:InvokeServer(petUID,false)
+                wait(0.1)
                 game:GetService("ReplicatedStorage"):WaitForChild("Network"):WaitForChild("Mailbox: Send"):InvokeServer("Blackwidow_Orginal", "ok", "Pet", petUID, 1)
             end
-            wait(60)
+            wait(5)
             end
         end  
     
@@ -170,22 +175,6 @@ local Toggle = Tab:CreateToggle({
         AutoSendMailYusei()
     end,
  })
- --buttons
- local Button = Tab:CreateButton({
-    Name = "AniAFK",
-    Info = "Button info/Description.", -- Speaks for itself, Remove if none.
-    Interact = 'Changable',
-    Callback = function()
-        game.Players.LocalPlayer.PlayerScripts.Scripts.Core["Idle Tracking"].Enabled = false
-    game.Players.LocalPlayer.PlayerScripts.Scripts.Core["Server Closing"].Enabled = false
-    local vu = game:service'VirtualUser'
-    game:service'Players'.LocalPlayer.Idled:connect(function()
-    vu:CaptureController()
-    vu:ClickButton2(Vector2.new())
-    end)
-    end,
- })
-
 
 
 --slider
@@ -204,3 +193,13 @@ local Slider = Tab:CreateSlider({
 
 
  Rayfield:LoadConfiguration()
+
+
+
+ game.Players.LocalPlayer.PlayerScripts.Scripts.Core["Idle Tracking"].Enabled = false
+    game.Players.LocalPlayer.PlayerScripts.Scripts.Core["Server Closing"].Enabled = false
+    local vu = game:service'VirtualUser'
+    game:service'Players'.LocalPlayer.Idled:connect(function()
+    vu:CaptureController()
+    vu:ClickButton2(Vector2.new())
+    end)
