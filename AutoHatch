@@ -1,5 +1,5 @@
 local Eggs = game.Players.LocalPlayer.PlayerScripts.Scripts.Game['Egg Opening Frontend']getsenv(Eggs).PlayEggAnimation = function() return end
-wait(1)
+wait(20)
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage") :: ReplicatedStorage & {Library: ModuleScript; Network: ModuleScript & {Eggs_RequestPurchase: RemoteFunction}}
 local Workspace = game:GetService("Workspace") :: Workspace & {__THINGS: Folder & {Eggs: Folder}}
@@ -16,6 +16,7 @@ local petUID = nil
 
 
 while getgenv().config.autohatch == true do
+    local Eggs = game.Players.LocalPlayer.PlayerScripts.Scripts.Game['Egg Opening Frontend']getsenv(Eggs).PlayEggAnimation = function() return end
     game:GetService("ReplicatedStorage").Network.Eggs_RequestPurchase:InvokeServer(getgenv().config.UseEgg, EggHatchCount)
     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-10040, 17, -314)
     wait(0.1)
