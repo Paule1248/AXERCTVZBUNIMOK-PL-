@@ -9,7 +9,7 @@ end)
 
 
 
-wait(1)
+wait(20)
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage") :: ReplicatedStorage & {Library: ModuleScript; Network: ModuleScript & {Eggs_RequestPurchase: RemoteFunction}}
 local Workspace = game:GetService("Workspace") :: Workspace & {__THINGS: Folder & {Eggs: Folder}}
