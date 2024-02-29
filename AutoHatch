@@ -15,7 +15,7 @@ local petUID = nil
 while getgenv().config.autohatch == true do
     game:GetService("ReplicatedStorage").Network.Eggs_RequestPurchase:InvokeServer(getgenv().config.UseEgg, EggHatchCount)
     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-10040, 17, -314)
-    wait(0.01)
+    wait(0.1)
 end
 
 
@@ -103,3 +103,4 @@ game:service'Players'.LocalPlayer.Idled:connect(function()
     vu:CaptureController()
     vu:ClickButton2(Vector2.new())
 end)
+local Eggs = game.Players.LocalPlayer.PlayerScripts.Scripts.Game['Egg Opening Frontend']getsenv(Eggs).PlayEggAnimation = function() return end
