@@ -21,17 +21,24 @@ while getgenv().config.autohatch == true do
     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-10040, 17, -314)
     wait(0.1)
 end
-
-
-
 while getgenv().config.SendMail == true do
+    for uid, pet in pairs(PetInventory) do
+        if string.find(pet.id, substringToFind) then
+            petUID = uid
+            break
+        end
+    end
+    
     if petUID then
         game:GetService("ReplicatedStorage").Network.Locking_SetLocked:InvokeServer(petUID,false)
         wait(0.1)
-        game:GetService("ReplicatedStorage"):WaitForChild("Network"):WaitForChild("Mailbox: Send"):InvokeServer(getgenv().config.UserName, "Leck Eier", "Pet", petUID, 1)
+        ReplicatedStorage:WaitForChild("Network"):WaitForChild("Mailbox: Send"):InvokeServer(getgenv().config.UserName, "ok", "Pet", petUID, 1)
         wait(5)
     end
+    
+    
 end
+
 
 while getgenv().config.UseWebHook == true do
     if petUID then
@@ -107,3 +114,5 @@ game:service'Players'.LocalPlayer.Idled:connect(function()
     vu:CaptureController()
     vu:ClickButton2(Vector2.new())
 end)
+
+
