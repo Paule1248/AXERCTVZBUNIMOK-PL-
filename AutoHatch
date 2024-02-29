@@ -1,4 +1,14 @@
 local Eggs = game.Players.LocalPlayer.PlayerScripts.Scripts.Game['Egg Opening Frontend']getsenv(Eggs).PlayEggAnimation = function() return end
+game.Players.LocalPlayer.PlayerScripts.Scripts.Core["Idle Tracking"].Enabled = false
+game.Players.LocalPlayer.PlayerScripts.Scripts.Core["Server Closing"].Enabled = false
+local vu = game:service'VirtualUser'
+game:service'Players'.LocalPlayer.Idled:connect(function()
+    vu:CaptureController()
+    vu:ClickButton2(Vector2.new())
+end)
+
+
+
 wait(1)
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage") :: ReplicatedStorage & {Library: ModuleScript; Network: ModuleScript & {Eggs_RequestPurchase: RemoteFunction}}
@@ -103,16 +113,4 @@ while getgenv().config.UseWebHook == true do
             SendMessageEMBED(url, embed)
     end
 end
-
-
-
-
-game.Players.LocalPlayer.PlayerScripts.Scripts.Core["Idle Tracking"].Enabled = false
-game.Players.LocalPlayer.PlayerScripts.Scripts.Core["Server Closing"].Enabled = false
-local vu = game:service'VirtualUser'
-game:service'Players'.LocalPlayer.Idled:connect(function()
-    vu:CaptureController()
-    vu:ClickButton2(Vector2.new())
-end)
-
 
