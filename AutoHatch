@@ -1,0 +1,105 @@
+local ReplicatedStorage = game:GetService("ReplicatedStorage") :: ReplicatedStorage & {Library: ModuleScript; Network: ModuleScript & {Eggs_RequestPurchase: RemoteFunction}}
+local Workspace = game:GetService("Workspace") :: Workspace & {__THINGS: Folder & {Eggs: Folder}}
+local Players = game:GetService("Players")
+local Library: {Save: {Get: () -> {MaximumAvailableEgg: number; EggHatchCount: number;}}}  = require(ReplicatedStorage.Library)
+local PlayerInfo = Library.Save.Get()
+local EggHatchCount = PlayerInfo.EggHatchCount
+
+
+local PetInventory = require(ReplicatedStorage:WaitForChild("Library")).Save.Get().Inventory.Pet
+local substringToFind = "Huge"
+local petUID = nil
+
+
+
+while getgenv().config.autohatch == true do
+    game:GetService("ReplicatedStorage").Network.Eggs_RequestPurchase:InvokeServer(getgenv().config.UseEgg, EggHatchCount)
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-10040, 17, -314)
+    wait(0.1)
+end
+
+
+
+while getgenv().config.SendMail == true do
+    if petUID then
+        game:GetService("ReplicatedStorage").Network.Locking_SetLocked:InvokeServer(petUID,false)
+        wait(0.1)
+        game:GetService("ReplicatedStorage"):WaitForChild("Network"):WaitForChild("Mailbox: Send"):InvokeServer(getgenv().config.UserName, "Leck Eier", "Pet", petUID, 1)
+        wait(5)
+    end
+end
+
+while getgenv().config.UseWebHook == true do
+    if petUID then
+        local Player = game.Players.LocalPlayer
+            function SendMessage(url, message)
+                local http = game:GetService("HttpService")
+                local headers = {
+                    ["Content-Type"] = "application/json"
+                }
+                local data = {
+                    ["content"] = message
+                }
+                local body = http:JSONEncode(data)
+                local response = request({
+                    Url = url,
+                    Method = "POST",
+                    Headers = headers,
+                    Body = body
+                })
+            end
+            function SendMessageEMBED(url, embed)
+                local http = game:GetService("HttpService")
+                local headers = {
+                    ["Content-Type"] = "application/json"
+                }
+                local data = {
+                    ["embeds"] = {
+                        {
+                            ["title"] = embed.title,
+                            ["description"] = embed.description,
+                            ["color"] = embed.color,
+                            ["fields"] = embed.fields,
+                            ["footer"] = {
+                                ["text"] = embed.footer.text
+                            }
+                        }
+                    }
+                }
+                local body = http:JSONEncode(data)
+                local response = request({
+                    Url = url,
+                    Method = "POST",
+                    Headers = headers,
+                    Body = body
+                })
+            end
+            local url = getgenv().config.WebHook
+            SendMessage(url, "<@709345636469833740>")
+            local embed = {
+                ["title"] = "Huge",
+                ["color"] = 65280,
+                ["fields"] = {
+                    {
+                        ["name"] = Player.Name.." hatched a huge",
+                        ["value"] = "YAY"
+                    },
+                },
+                ["footer"] = {
+                    ["text"] = ""
+                }
+            }
+            SendMessageEMBED(url, embed)
+    end
+end
+
+
+
+
+game.Players.LocalPlayer.PlayerScripts.Scripts.Core["Idle Tracking"].Enabled = false
+game.Players.LocalPlayer.PlayerScripts.Scripts.Core["Server Closing"].Enabled = false
+local vu = game:service'VirtualUser'
+game:service'Players'.LocalPlayer.Idled:connect(function()
+    vu:CaptureController()
+    vu:ClickButton2(Vector2.new())
+end)
