@@ -17,11 +17,6 @@ local PlayerInfo = Library.Save.Get()
 local EggHatchCount = PlayerInfo.EggHatchCount
 
 
-local PetInventory = require(ReplicatedStorage:WaitForChild("Library")).Save.Get().Inventory.Pet
-local substringToFind = "Huge"
-local petUID = nil
-
-
 
 while getgenv().config.autohatch == true do
     local Eggs = game.Players.LocalPlayer.PlayerScripts.Scripts.Game['Egg Opening Frontend']getsenv(Eggs).PlayEggAnimation = function() return end
@@ -30,6 +25,11 @@ while getgenv().config.autohatch == true do
     wait(0.1)
 end
 while getgenv().config.SendMail == true do
+    local ReplicatedStorage = game:GetService("ReplicatedStorage")
+    local PetInventory = require(ReplicatedStorage:WaitForChild("Library")).Save.Get().Inventory.Pet
+    local substringToFind = "Huge"
+    local petUID = nil
+    
     for uid, pet in pairs(PetInventory) do
         if string.find(pet.id, substringToFind) then
             petUID = uid
@@ -38,13 +38,8 @@ while getgenv().config.SendMail == true do
     end
     
     if petUID then
-        game:GetService("ReplicatedStorage").Network.Locking_SetLocked:InvokeServer(petUID,false)
-        wait(0.1)
-        ReplicatedStorage:WaitForChild("Network"):WaitForChild("Mailbox: Send"):InvokeServer(getgenv().config.UserName, "ok", "Pet", petUID, 1)
-        wait(5)
+        ReplicatedStorage:WaitForChild("Network"):WaitForChild("Mailbox: Send"):InvokeServer(getgenv().config.UserName, "Hi", "Pet", petUID, 1)
     end
-    
-    
 end
 
 
@@ -111,4 +106,6 @@ while getgenv().config.UseWebHook == true do
             SendMessageEMBED(url, embed)
     end
 end
+
+
 
