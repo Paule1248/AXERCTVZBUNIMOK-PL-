@@ -7,7 +7,7 @@ game:service'Players'.LocalPlayer.Idled:connect(function()
     vu:ClickButton2(Vector2.new())
 end)
 
-wait(1)
+repeat task.wait(1) until game:isLoaded()
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage") :: ReplicatedStorage & {Library: ModuleScript; Network: ModuleScript & {Eggs_RequestPurchase: RemoteFunction}}
 local Workspace = game:GetService("Workspace") :: Workspace & {__THINGS: Folder & {Eggs: Folder}}
