@@ -15,7 +15,7 @@ local petUID = nil
 while getgenv().config.autohatch == true do
     game:GetService("ReplicatedStorage").Network.Eggs_RequestPurchase:InvokeServer(getgenv().config.UseEgg, EggHatchCount)
     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-10040, 17, -314)
-    wait(0.1)
+    wait(0.01)
 end
 
 
