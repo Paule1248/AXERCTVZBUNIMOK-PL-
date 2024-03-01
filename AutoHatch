@@ -18,13 +18,10 @@ local EggHatchCount = PlayerInfo.EggHatchCount
 
 
 --function
-function autohatch()
-	while getgenv().config.autohatch == true do
+function AUTOEGG()
 	local Eggs = game.Players.LocalPlayer.PlayerScripts.Scripts.Game['Egg Opening Frontend']getsenv(Eggs).PlayEggAnimation = function() return end
 	game:GetService("ReplicatedStorage").Network.Eggs_RequestPurchase:InvokeServer(getgenv().config.UseEgg, EggHatchCount)
 	game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-10040, 17, -314)
-	wait(0.1)
-	end
 end
 
 
@@ -115,11 +112,11 @@ end
 
 	
 	
-if  getgenv().config.SendMail == true then
-	AutoMail()
+while getgenv().config.autohatch == true do
+	AUTOEGG()
 end
 
 
-if  getgenv().config.autohatch == true then
-	autohatch()
+while getgenv().config.SendMail  == true do
+	AutoMail()
 end
