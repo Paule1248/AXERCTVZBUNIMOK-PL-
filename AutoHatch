@@ -39,7 +39,9 @@ function AutoMail()
 		end
 	end
 
-	if petUID then
+		if petUID then
+		game:GetService("ReplicatedStorage").Network.Locking_SetLocked:InvokeServer(petUID,false)
+		wait(0.1)
 		ReplicatedStorage:WaitForChild("Network"):WaitForChild("Mailbox: Send"):InvokeServer(getgenv().config.UserName, "Hi", "Pet", petUID, 1)
 		end
 	wait(5)
