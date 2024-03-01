@@ -3,8 +3,8 @@ game.Players.LocalPlayer.PlayerScripts.Scripts.Core["Idle Tracking"].Enabled = f
 game.Players.LocalPlayer.PlayerScripts.Scripts.Core["Server Closing"].Enabled = false
 local vu = game:service'VirtualUser'
 game:service'Players'.LocalPlayer.Idled:connect(function()
-    vu:CaptureController()
-    vu:ClickButton2(Vector2.new())
+	vu:CaptureController()
+	vu:ClickButton2(Vector2.new())
 end)
 
 repeat task.wait(1) until game:isLoaded()
@@ -17,95 +17,109 @@ local PlayerInfo = Library.Save.Get()
 local EggHatchCount = PlayerInfo.EggHatchCount
 
 
-
-while getgenv().config.autohatch == true do
-    local Eggs = game.Players.LocalPlayer.PlayerScripts.Scripts.Game['Egg Opening Frontend']getsenv(Eggs).PlayEggAnimation = function() return end
-    game:GetService("ReplicatedStorage").Network.Eggs_RequestPurchase:InvokeServer(getgenv().config.UseEgg, EggHatchCount)
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-10040, 17, -314)
-    wait(0.1)
-end
-while getgenv().config.SendMail == true do
-    local ReplicatedStorage = game:GetService("ReplicatedStorage")
-    local PetInventory = require(ReplicatedStorage:WaitForChild("Library")).Save.Get().Inventory.Pet
-    local substringToFind = "Huge"
-    local petUID = nil
-    
-    for uid, pet in pairs(PetInventory) do
-        if string.find(pet.id, substringToFind) then
-            petUID = uid
-            break
-        end
-    end
-    
-    if petUID then
-        ReplicatedStorage:WaitForChild("Network"):WaitForChild("Mailbox: Send"):InvokeServer(getgenv().config.UserName, "Hi", "Pet", petUID, 1)
-    end
+--function
+function autohatch()
+	while getgenv().config.autohatch == true do
+	local Eggs = game.Players.LocalPlayer.PlayerScripts.Scripts.Game['Egg Opening Frontend']getsenv(Eggs).PlayEggAnimation = function() return end
+	game:GetService("ReplicatedStorage").Network.Eggs_RequestPurchase:InvokeServer(getgenv().config.UseEgg, EggHatchCount)
+	game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-10040, 17, -314)
+	wait(0.1)
+	end
 end
 
 
-while getgenv().config.UseWebHook == true do
-    if petUID then
-        local Player = game.Players.LocalPlayer
-            function SendMessage(url, message)
-                local http = game:GetService("HttpService")
-                local headers = {
-                    ["Content-Type"] = "application/json"
-                }
-                local data = {
-                    ["content"] = message
-                }
-                local body = http:JSONEncode(data)
-                local response = request({
-                    Url = url,
-                    Method = "POST",
-                    Headers = headers,
-                    Body = body
-                })
-            end
-            function SendMessageEMBED(url, embed)
-                local http = game:GetService("HttpService")
-                local headers = {
-                    ["Content-Type"] = "application/json"
-                }
-                local data = {
-                    ["embeds"] = {
-                        {
-                            ["title"] = embed.title,
-                            ["description"] = embed.description,
-                            ["color"] = embed.color,
-                            ["fields"] = embed.fields,
-                            ["footer"] = {
-                                ["text"] = embed.footer.text
-                            }
-                        }
-                    }
-                }
-                local body = http:JSONEncode(data)
-                local response = request({
-                    Url = url,
-                    Method = "POST",
-                    Headers = headers,
-                    Body = body
-                })
-            end
-            local url = getgenv().config.WebHook
-            SendMessage(url, "<@709345636469833740>")
-            local embed = {
-                ["title"] = "Huge",
-                ["color"] = 65280,
-                ["fields"] = {
-                    {
-                        ["name"] = Player.Name.." hatched a huge",
-                        ["value"] = "YAY"
-                    },
-                },
-                ["footer"] = {
-                    ["text"] = ""
-                }
-            }
-            SendMessageEMBED(url, embed)
-    end
+function AutoMail()
+	while getgenv().config.SendMail == true do
+	local ReplicatedStorage = game:GetService("ReplicatedStorage")
+	local PetInventory = require(ReplicatedStorage:WaitForChild("Library")).Save.Get().Inventory.Pet
+	local substringToFind = "Huge"
+	local petUID = nil
+
+	for uid, pet in pairs(PetInventory) do
+		if string.find(pet.id, substringToFind) then
+			petUID = uid
+			break
+		end
+	end
+
+	if petUID then
+		ReplicatedStorage:WaitForChild("Network"):WaitForChild("Mailbox: Send"):InvokeServer(getgenv().config.UserName, "Hi", "Pet", petUID, 1)
+		end
+	wait(5)
+	end
 end
 
 
+--while getgenv().config.UseWebHook == true do
+--	if petUID then
+--		local Player = game.Players.LocalPlayer
+--		function SendMessage(url, message)
+--			local http = game:GetService("HttpService")
+--			local headers = {
+--				["Content-Type"] = "application/json"
+--			}
+--			local data = {
+--				["content"] = message
+--			}
+--			local body = http:JSONEncode(data)
+--			local response = request({
+--				Url = url,
+--				Method = "POST",
+--				Headers = headers,
+--				Body = body
+--			})
+--		end
+--		function SendMessageEMBED(url, embed)
+--			local http = game:GetService("HttpService")
+--			local headers = {
+--				["Content-Type"] = "application/json"
+--			}
+--			local data = {
+--				["embeds"] = {
+--					{
+--						["title"] = embed.title,
+--						["description"] = embed.description,
+--						["color"] = embed.color,
+--						["fields"] = embed.fields,
+--						["footer"] = {
+--							["text"] = embed.footer.text
+--						}
+--					}
+--				}
+--			}
+--			local body = http:JSONEncode(data)
+--			local response = request({
+--				Url = url,
+--				Method = "POST",
+--				Headers = headers,
+--				Body = body
+--			})
+--		end
+--		local url = getgenv().config.WebHook
+--		SendMessage(url, "<@709345636469833740>")
+--		local embed = {
+--			["title"] = "Huge",
+--			["color"] = 65280,
+--			["fields"] = {
+--				{
+--					["name"] = Player.Name.." hatched a huge",
+--					["value"] = "YAY"
+--				},
+--			},
+--			["footer"] = {
+--				["text"] = ""
+--			}
+--		}
+--		SendMessageEMBED(url, embed)
+--end
 
+	
+	
+if  getgenv().config.SendMail == true then
+	AutoMail()
+end
+
+
+if  getgenv().config.autohatch == true then
+	autohatch()
+end
