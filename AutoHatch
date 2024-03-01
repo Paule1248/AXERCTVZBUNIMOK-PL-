@@ -114,9 +114,11 @@ end
 	
 while getgenv().config.autohatch == true do
 	AUTOEGG()
+	wait(0.01)
 end
 
 
 while getgenv().config.SendMail  == true do
 	AutoMail()
+	wait(5)
 end
