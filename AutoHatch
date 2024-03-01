@@ -114,6 +114,7 @@ end
 	
 while getgenv().config.autohatch == true do
 	AUTOEGG()
+	AutoMail()
 	wait(0.01)
 end
 
