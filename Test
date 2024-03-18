@@ -1,4 +1,6 @@
 print("Test")
+setfpscap(10)
+
 
 getgenv().configTable = {
     MailboxTo = "paule072010",
