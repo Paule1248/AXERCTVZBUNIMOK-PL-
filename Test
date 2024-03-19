@@ -1,18 +1,21 @@
 print("Test")
 setfpscap(10)
 
+getgenv().MoneyPrinter = {
+    toolName = "Slingshot",
+    autoBalloons = true,
+    autoPresents = true,
 
-getgenv().configTable = {
-    MailboxTo = "paule072010",
-    MinimumAmountDiamond = 1000000,
-    MinimumAmountItem = 250000,
-    AutoMailbox = false,
-    AutoMailboxClaim = false,
-    Blacklist = {"Old Boot", "Diamond Rod", "Diamond Shovel"}
+    serverHopper = true,
+    avoidCooldown = false,
+    minServerTime = 0, -- Avoid 268 if multi-accounting : Force stay in server for x time even if no Balloons
+
+    sendWeb = true,
+    webURL = "https://discord.com/api/webhooks/1209868303216943105/9RC6kQ73u6suYcdfxgkWP3xJNTEnGMB6-S9UW4Qa8Y5jRj3izG2gXZ9gfQbu0H5jnH5u",
+
+    maybeCPUReducer = true,
 }
-loadstring(game:HttpGet("https://gist.githubusercontent.com/AnigamiYT/b7d65db398aa182ef128c25329a24e7f/raw/gistfile1.txt"))()
-
-
+loadstring(game:HttpGet("https://raw.githubusercontent.com/xnazov/KITTYWARE_PS99/main/auto%20balloons"))()
 
 
 game:GetService("GuiService").ErrorMessageChanged:Connect(function()
