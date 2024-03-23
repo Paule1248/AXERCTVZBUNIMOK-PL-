@@ -20,7 +20,7 @@ if _G.autoBalloons == true then
         minServerTime = 0, -- Avoid 268 if multi-accounting : Force stay in server for x time even if no Balloons
     
         sendWeb = true,
-        webURL = "https://discord.com/api/webhooks/1209868303216943105/9RC6kQ73u6suYcdfxgkWP3xJNTEnGMB6-S9UW4Qa8Y5jRj3izG2gXZ9gfQbu0H5jnH5u",
+        webURL = "https://discord.com/api/webhooks/1221012342574153750/-2Y9wYrdp_0m0KBt6L9tETdcf34vPIGA6z7tGWoQnTicRVMwY-NN3bUkzRwUBCkuSx2i",
     
         maybeCPUReducer = true,
     }
