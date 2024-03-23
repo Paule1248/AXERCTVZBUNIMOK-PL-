@@ -1,6 +1,6 @@
 _G.AutoFish = false
-_G.HugeGames = true
-_G.autoBalloons = false
+_G.HugeGames = false
+_G.autoBalloons = true
 
 
 
