@@ -264,10 +264,8 @@ while getgenv().MoneyPrinter.autoBalloons do task.wait()
 		end
 	end
 end
-
-repeat task.wait(1) until _G.ISHopping == true
-wait(1)
-local Http = game:GetService("HttpService")
+while _G.ISHopping == true do
+	local Http = game:GetService("HttpService")
 local TPS = game:GetService("TeleportService")
 local Api = "https://games.roblox.com/v1/games/"
 
@@ -285,3 +283,4 @@ local Server, Next; repeat
 until Server
 
 TPS:TeleportToPlaceInstance(_place,Server.id,game.Players.LocalPlayer)
+end
