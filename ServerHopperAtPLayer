@@ -1,5 +1,5 @@
-local ServerHopAtPlayer123 = _G.ServerHopAtPlayer
-while _G.ServerHop do
+local ServerHopAtPlayer123 = getgenv().ServerHop.ServerHopAt
+while getgenv().ServerHop.ServerHop do
 local players = game:GetService("Players")
 local playersTable = players:GetPlayers() -- a table
 local numPlayers = #playersTable -- gives you a number
