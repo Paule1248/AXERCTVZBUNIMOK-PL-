@@ -22,5 +22,6 @@ Server = Servers.data[1]
 Next = Servers.nextPageCursor
 until Server
 TPS:TeleportToPlaceInstance(_place,Server.id,game.Players.LocalPlayer)
+print("Hopping")
 end
 end
