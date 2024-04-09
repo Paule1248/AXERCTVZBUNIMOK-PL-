@@ -1,3 +1,7 @@
+getgenv().ServerHop = {
+    ServerHop = true,
+    ServerHopAt = 3
+}
 local ServerHopAtPlayer123 = getgenv().ServerHop.ServerHopAt
 while getgenv().ServerHop.ServerHop do
 local players = game:GetService("Players")
