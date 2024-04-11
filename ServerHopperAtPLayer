@@ -30,7 +30,7 @@ local playersTable = players:GetPlayers() -- a table
 local numPlayers = #playersTable -- gives you a number
 wait(1)
 if numPlayers < ServerHopAtPlayer123 then
-print(numPlayers, "Players")
+--print(numPlayers, "Players")
 elseif numPlayers > ServerHopAtPlayer123 then
 local Http = game:GetService("HttpService")
 local TPS = game:GetService("TeleportService")
